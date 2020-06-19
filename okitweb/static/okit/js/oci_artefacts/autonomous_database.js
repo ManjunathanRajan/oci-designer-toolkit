@@ -26,6 +26,7 @@ class AutonomousDatabase extends OkitArtifact {
         this.db_workload = 'OLTP';
         this.is_auto_scaling_enabled = true;
         this.is_free_tier = false;
+        this.license_model = 'BRING_YOUR_OWN_LICENSE';
         // Update with any passed data
         this.merge(data);
         this.convert();
@@ -148,6 +149,10 @@ class AutonomousDatabase extends OkitArtifact {
         let okitJson = this.getOkitJson();
         let me = this;
         $(jqId(PROPERTIES_PANEL)).load("propertysheets/autonomous_database.html", () => {loadPropertiesSheet(me);});
+    }
+
+    loadValueProposition() {
+        $(jqId(VALUE_PROPOSITION_PANEL)).load("valueproposition/autonomous_database.html");
     }
 
 
