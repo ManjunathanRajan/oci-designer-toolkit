@@ -339,7 +339,7 @@ class OCIJsonValidator(object):
                         }
                         self.results['errors'].append(error)
             # Check Route Table
-            if (artefact['route_table_id'] == ''):
+            if artefact['route_table_id'] == '':
                 warning = {
                     'id': artefact['id'],
                     'type': 'Subnet',
@@ -348,7 +348,7 @@ class OCIJsonValidator(object):
                     'element': 'route_table_id'
                 }
                 self.results['warnings'].append(warning)
-            else:
+            elif artefact['prohibit_public_ip_on_vnic']:
                 route_table = self.getRouteTable(artefact['route_table_id'])
                 for route_rule in route_table.get('route_rules', []):
                     if route_rule.get('target_type', '') == 'internet_gateways':
@@ -362,7 +362,7 @@ class OCIJsonValidator(object):
                         }
                         self.results['errors'].append(error)
             # Check Security Lists
-            if (len(artefact['security_list_ids']) == 0):
+            if len(artefact['security_list_ids']) == 0:
                 warning = {
                     'id': artefact['id'],
                     'type': 'Subnet',
