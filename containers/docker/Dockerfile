@@ -24,6 +24,8 @@ EXPOSE 443
 RUN yum install -y \
     oracle-softwarecollection-release-el7 \
     oraclelinux-developer-release-el7 \
+# Disable oci yum
+# && yum-config-manager --disable ol7_ociyum_config \
 # Update base image
 # && yum update -y \
 # Install additional packages
