@@ -348,6 +348,19 @@ class OCIJsonValidator(object):
                     'element': 'route_table_id'
                 }
                 self.results['warnings'].append(warning)
+            else:
+                route_table = self.getRouteTable(artefact['route_table_id'])
+                for route_rule in route_table.get('route_rules', []):
+                    if route_rule.get('target_type', '') == 'internet_gateways':
+                        self.valid = False
+                        error = {
+                            'id': artefact['id'],
+                            'type': 'Subnet',
+                            'artefact': artefact['display_name'],
+                            'message': 'Private Subnet can not route to Internet Gateway.',
+                            'element': 'route_table_id'
+                        }
+                        self.results['errors'].append(error)
             # Check Security Lists
             if (len(artefact['security_list_ids']) == 0):
                 warning = {
@@ -402,3 +415,9 @@ class OCIJsonValidator(object):
             return ipaddress.ip_network(subnet1).overlaps(ipaddress.ip_network(subnet2))
         except ValueError:
             return False
+
+    def getRouteTable(self, id):
+        for route_table in self.okit_json['route_tables']:
+            if route_table['id'] == id:
+                return route_table
+        return {}

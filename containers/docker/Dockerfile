@@ -25,7 +25,7 @@ RUN yum install -y \
     oracle-softwarecollection-release-el7 \
     oraclelinux-developer-release-el7 \
 # Update base image
- && yum update -y \
+# && yum update -y \
 # Install additional packages
  && yum install -y \
         python36 \
